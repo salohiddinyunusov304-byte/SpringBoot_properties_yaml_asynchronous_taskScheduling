@@ -1,10 +1,10 @@
 package uz.pdp.springboot_properties_yaml_asynchronous_taskscheduling.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import uz.pdp.springboot_properties_yaml_asynchronous_taskscheduling.property.ExempleProperties;
 import uz.pdp.springboot_properties_yaml_asynchronous_taskscheduling.property.PeopleProperties;
 import uz.pdp.springboot_properties_yaml_asynchronous_taskscheduling.property.PersonProperties;
 
@@ -17,38 +17,15 @@ import java.util.Map;
 public class ReadValueFromPropertiesController {
     private final PersonProperties personProperties;
     private final PeopleProperties peopleProperties;
+    private final ExempleProperties exempleProperties;
 
-    @Value("${example.string:Default string..}")
-    private String exampleString;
-
-    @GetMapping("/exapleString")
-    public String getExampleString() {
-        return exampleString;
-    }
-
-    @Value("${example.languages}")
-    private List<String> examplelanguages;
-
-    @GetMapping("/exapleLanguages")
-    public List<String> getExampleLanguages() {
-        return examplelanguages;
-    }
-
-    @Value("#{'${example.languages2}'.split('# ')}")
-    private List<String> examplelanguages2;
-
-    @GetMapping("/excampleLanguages2")
-    public List<String> getExamplelanguages2() {
-        return examplelanguages2;
-    }
-
-    @Value("#{${example.numbers}}")
-    private Map<String, Integer> exampleNumbers;
-
-    @GetMapping("/exapleNumbers")
-    public Map<String, Integer> getExampleNumbers() {
-        return exampleNumbers;
-    }
+//    @Value("#{${example.numbers}}")
+//    private Map<String, Integer> exampleNumbers;
+//
+//    @GetMapping("/exampleNumbers")
+//    public Map<String, Integer> getExampleNumbers() {
+//        return exampleNumbers;
+//    }
 
     @GetMapping("/person")
     public PersonProperties getPerson() {
@@ -58,5 +35,25 @@ public class ReadValueFromPropertiesController {
     @GetMapping("/people")
     public PeopleProperties getPeople() {
         return peopleProperties;
+    }
+
+    @GetMapping("/exampleString")
+    public String getExample() {
+        return exempleProperties.string();
+    }
+
+    @GetMapping("/exampleLanguages")
+    public List<String> getExampleLanguage() {
+        return exempleProperties.languages();
+    }
+
+    @GetMapping("/exampleLanguages2")
+    public List<String> getExampleLanguage2() {
+        return exempleProperties.languages2();
+    }
+
+    @GetMapping("/exampleNumbers")
+    public Map<String, Integer> getExampleNumbers() {
+        return exempleProperties.numbers();
     }
 }
