@@ -2,8 +2,10 @@ package uz.pdp.springboot_properties_yaml_asynchronous_taskscheduling.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -11,21 +13,28 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class SimpleService {
 
-//    private void hello() {
-//        sendMessage(); // bu holatda sendMessage() asynchrone ishlamaydi
+//    @Scheduled(fixedDelay = 3000) - har 5 sekunda ishlatadi
+//    public void showTime() {
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
+//
+//        log.info("Time: {}", dateFormat.format(new Date()));
+//        TimeUnit.SECONDS.sleep(2);
 //    }
-    @Async
-    public void sendMessage() {
 
-       log.info("sendMessage is starting. Time: {}", new Date());
+    // har 3 sekunda ishlaydi
+//    @Scheduled(fixedRate = 3, timeUnit = TimeUnit.SECONDS)
+//    public void showTime() throws InterruptedException {
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
+//
+//        log.info("Time: {}", dateFormat.format(new Date()));
+//        TimeUnit.SECONDS.sleep(2);
+//    }
 
-        try {
-            TimeUnit.SECONDS.sleep(3);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+    @Scheduled(cron = "* */10 * * * ?") // har 1 sekundda ishlaydi
+    public void showTime() throws InterruptedException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
 
-        log.info("sendMessage is send. Time: {}", new Date());
-        throw new RuntimeException("Xatolik sodir boldi...");
+        log.info("Time: {}", dateFormat.format(new Date()));
+        TimeUnit.SECONDS.sleep(2);
     }
 }

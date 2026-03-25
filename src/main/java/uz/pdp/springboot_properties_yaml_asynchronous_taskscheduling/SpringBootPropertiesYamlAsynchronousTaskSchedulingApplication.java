@@ -16,19 +16,24 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 @SpringBootApplication
 @RequiredArgsConstructor
 @OpenAPIDefinition(
         info = @Info(
-                title = "Working with asynchronous execution | G58 Open Specification | Swagger",
+                title = "Working with Task Scheduling | G58 Open Specification | Swagger",
                 version = "1.0",
-                description = "API for using asynchronous execution",
+                description = "API for using Task Scheduling",
                 contact = @Contact(
                         name = "Salohiddin Yunusov",
                         email = "salohiddinyunusov377@gmail.com"
@@ -47,10 +52,22 @@ import java.util.List;
 )
 
 @ConfigurationPropertiesScan
-@EnableAsync
+@EnableScheduling
 public class SpringBootPropertiesYamlAsynchronousTaskSchedulingApplication {
 
     public static void main(String[] args) {
+        class ClockTask extends TimerTask {
+            private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
+
+            @Override
+            public void run() {
+                System.out.print("\r" + "Time is : " + dateFormat.format(new Date()));
+            }
+        }
+
+        Timer timer = new Timer();
+//        timer.scheduleAtFixedRate(new ClockTask(), 2000, 1000);
+
         SpringApplication.run(SpringBootPropertiesYamlAsynchronousTaskSchedulingApplication.class, args);
     }
 
