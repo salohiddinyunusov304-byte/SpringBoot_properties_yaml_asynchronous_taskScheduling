@@ -14,6 +14,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.task.TaskExecutor;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -23,9 +26,9 @@ import java.util.List;
 @RequiredArgsConstructor
 @OpenAPIDefinition(
         info = @Info(
-                title = "Working with .property files | G58 Open Specification | Swagger",
+                title = "Working with asynchronous execution | G58 Open Specification | Swagger",
                 version = "1.0",
-                description = "API for using .property",
+                description = "API for using asynchronous execution",
                 contact = @Contact(
                         name = "Salohiddin Yunusov",
                         email = "salohiddinyunusov377@gmail.com"
@@ -44,6 +47,7 @@ import java.util.List;
 )
 
 @ConfigurationPropertiesScan
+@EnableAsync
 public class SpringBootPropertiesYamlAsynchronousTaskSchedulingApplication {
 
     public static void main(String[] args) {
@@ -86,6 +90,18 @@ public class SpringBootPropertiesYamlAsynchronousTaskSchedulingApplication {
                 registry.addMapping("/**").allowedOrigins("*");
             }
         };
+    }
+
+    @Bean
+    public TaskExecutor taskExecutor() {
+        ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
+
+        taskExecutor.setCorePoolSize(10);
+        taskExecutor.setMaxPoolSize(100);
+        taskExecutor.setKeepAliveSeconds(30);
+        taskExecutor.setQueueCapacity(100);
+        taskExecutor.setThreadNamePrefix("g58-thExec-");
+        return taskExecutor;
     }
 
 }
