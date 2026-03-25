@@ -18,31 +18,3 @@ spring:
 springdoc:
   swagger-ui:
     path=/swagger-ui.html
-
-example:
-  string: |
-    Salom .properties file
-    WWWWW
-    wertyui
-    fghjiuytr
-  languages:
-    - Java
-    - Kotlin
-    - Go
-    - C++
-  languages2: ['Java', 'Kotlin', 'Go', 'C++']
-  numbers: {'one':1, 'two':2, 'three':3}
-
-people:
-  person[0]:
-    id: 1
-    firstName: Ali
-    lastName: Aliyev
-    fullName: ${people.person[0].firstName} ${people.person[0].lastName}
-    age: 23
-  person[1]:
-    id: 2
-    firstName: Vali
-    lastName: Valiyev
-    fullName: ${people.person[1].firstName} ${people.person[1].lastName}
-    age: 25
